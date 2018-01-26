@@ -16,7 +16,7 @@ const resetAction = NavigationActions.reset({
 
 
 
-class My extends Base {
+class Last extends Base {
     constructor(props) {
         super(props);
     }
@@ -25,15 +25,10 @@ class My extends Base {
             <View style={{backgroundColor:"#cccccc",flex:1,alignItems:"center",justifyContent:"center"}}>
                 <Text onPress={
                     ()=>{
-                        this.To("Last")
+                        this.BackTop();
+                      //  this.props.navigation.goBack("List");
 
-                    }}> my 222! </Text>
-                <Text onPress={
-                    ()=>{
-                        this.Back(2);
-
-                    }}> my 222! </Text>
-
+                }}> Last0 ! </Text>
             </View>
         );
     }
@@ -42,4 +37,4 @@ class My extends Base {
 const mapStateToProps = (state) => ({
     nav: state.navReducer
 });
-export default connect(mapStateToProps)(My);
+export default connect(mapStateToProps)(Last);

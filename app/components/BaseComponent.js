@@ -2,64 +2,35 @@
  * Created by liao on 2017/5/13.
  */
 import {Component} from 'react'
-import {Platform,AsyncStorage,DeviceEventEmitter} from 'react-native'
-import {getDeviceToken} from '../common/common'
 import Toast from 'react-native-root-toast';
-import set from "../config/config";
-import request from "../lib/request";
+import { NavigationActions } from 'react-navigation'
 export default class BaseComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userinfo:null,
             isloading: false,
         }
     }
-    To(component,Login=null,args={},float='right')
+    To(omponent,args={})
     {
-        if(Login && !this.props.data.userinfo)
-        {
-            component=Login;
-            float = "bottom"
-        }
-        this.props.navigator.push({
-            component:component,
-            float:float,
-            args:args,
-        })
+        this.props.navigation.navigate(omponent,args)
+
     }
-    
-    Back() {
-        const navigator = this.props.navigator;
-        if (navigator && navigator.getCurrentRoutes().length > 1) {
-            navigator.pop()
-            return true;
-        }
-        return false;
+    Back(num=1) {
+        this.props.navigation.goBack(this.props.nav.routes[this.props.nav.routes.length-num].key)
     }
     BackTop()
     {
-        this.props.navigator.popToTop();
+        this.props.navigation.goBack(this.props.nav.routes[1].key)
     }
     bottomTo(component,args=null)
     {
-        this.props.navigator.push({
-            component:component,
-            float:"bottom",
-            args:args
-        })
+
     }
 
     async getTokens()
     {
-        await AsyncStorage.getItem("token").then((data) => {
-            this.token=null;
-            if(data)
-            {
-                this.token = data
-            }
-        })
-        this.device_token = getDeviceToken();
+
     }
 
 
@@ -88,6 +59,7 @@ export default class BaseComponent extends Component {
             case 'top':toastPosition = Toast.positions.TOP;break;
             case 'bottom':toastPosition = Toast.positions.BOTTOM;break;
         }
+
         this.toast&&Toast.hide(this.toast);
         this.toast = Toast.show(message, {
             duration: time,
@@ -97,6 +69,7 @@ export default class BaseComponent extends Component {
             hideOnPress: false,
             delay: 0,
         });
+
         this.hideLoading();
     }
 

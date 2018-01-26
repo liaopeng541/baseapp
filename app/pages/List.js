@@ -5,40 +5,31 @@ import React, {Component} from 'react';
 import {Text,View} from 'react-native';
 import {connect} from "react-redux";
 import { NavigationActions } from 'react-navigation'
+import Base from "../components/BaseComponent"
 const resetAction = NavigationActions.reset({
     index: 0,
     actions: [
         NavigationActions.navigate({ routeName: 'Home'})
     ]
 })
-
-
-
-
-class List extends Component {
+class List extends Base {
     constructor(props) {
         super(props);
     }
     render() {
         return (
             <View style={{backgroundColor:"#cccccc",flex:1,alignItems:"center",justifyContent:"center"}}>
-            <Text onPress={()=>{this.props.dispatch(resetAction)
+            <Text onPress={
+                ()=>{
+                    this.To("My")
 
-            }}> List ! </Text>
-                <Text onPress={()=>{
-                    var key = "";
-                    this.props.nav.routes.map((item,i)=>{
-                        if(item.routeName=="Home")
-                        {
-                            key=item.key;
-                        }
-                    })
-                    console.log(key)
-                    this.props.navigation.goBack(key);
-                    this.props.navigation.goBack("Home");
-                    console.log(this.props.nav.routes)
-                 //   this.props.navigation.dispatch(backAction)
-                }}> {this.props.navigation.state.params && this.props.navigation.state.params.goods_id} </Text>
+            }}> List 222! </Text>
+                <Text onPress={
+                    ()=>{
+                        this.Back();
+
+                    }}> List 222! </Text>
+
             </View>
         );
     }

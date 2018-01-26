@@ -11,9 +11,13 @@ import {addNavigationHelpers,NavigationActions} from 'react-navigation';
 import {connect} from "react-redux";
 import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation';
+import My from "../pages/My";
+import Last from "../pages/Last";
 export const Routers = StackNavigator({
     Home: {screen: HomeTab},
     List:{screen:List},
+    My:{screen:My},
+    Last:{screen:Last},
 },{
     navigationOptions:{header:null},
     initialRouteName: 'Home',
