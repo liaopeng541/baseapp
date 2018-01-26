@@ -1,65 +1,63 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
-    StyleSheet,
-    Image
+    BackHandler,
+    ToastAndroid
 } from 'react-native';
-
-import {
-    StackNavigator,
-    TabNavigator
-} from 'react-navigation';
-
-import HomePage from '../pages/Home';
-import My from '../pages/My'
+import {StackNavigator} from 'react-navigation';
 import List from '../pages/List'
-import NIcon from 'react-native-vector-icons/Ionicons'
+import HomeTab from "./HomeTab";
+import CardStackStyleInterpolator from 'react-navigation/src/views/CardStack/CardStackStyleInterpolator';
+import {addNavigationHelpers,NavigationActions} from 'react-navigation';
+import {connect} from "react-redux";
 import SplashScreen from 'react-native-splash-screen'
-SplashScreen.hide();
-const MainScreenNavigator = TabNavigator({
-    Home: {
-        screen: HomePage,
-        navigationOptions: {
-            header:null,
-            tabBarLabel:'首页',
-            tabBarIcon: ({tintColor}) => (
-                <NIcon name={"ios-people"} style={{backgroundColor: "rgba(0,0,0,0)"}}
-                       size={20} color="#cc0033"/>
-            ),
-        }
-    },
-    Certificate: {
-        screen: My,
-        navigationOptions: {
-            header:null,
-            tabBarLabel:'我的',
-            tabBarIcon: ({tintColor}) => (
-                <NIcon name={"ios-people"} style={{backgroundColor: "rgba(0,0,0,0)"}}
-                       size={20} color="#cc0033"/>
-            ),
-        }
-    },
-}, {
-    animationEnabled: false, // 切换页面时不显示动画
-    tabBarPosition: 'bottom', // 显示在底端，android 默认是显示在页面顶端的
-    swipeEnabled: false, // 禁止左右滑动
-    backBehavior: 'none', // 按 back 键是否跳转到第一个 Tab， none 为不跳转
-    tabBarOptions: {
-      //  activeTintColor: '#008AC9', // 文字和图片选中颜色
-      //  inactiveTintColor: '#999', // 文字和图片默认颜色
-        showIcon: true, // android 默认不显示 icon, 需要设置为 true 才会显示
-        indicatorStyle: {height: 0}, // android 中TabBar下面会显示一条线，高度设为 0 后就不显示线了
-        style: {
-            backgroundColor: '#000000', // TabBar 背景色
-        },
-        labelStyle: {
-            fontSize: 12, // 文字大小
-        },
-    },
-});
-const SimpleApp = StackNavigator({
-    Home: {screen: MainScreenNavigator},
+import Orientation from 'react-native-orientation';
+export const Routers = StackNavigator({
+    Home: {screen: HomeTab},
     List:{screen:List},
-
+},{
+    navigationOptions:{header:null},
+    initialRouteName: 'Home',
+    transitionConfig: () => ({
+        screenInterpolator: CardStackStyleInterpolator.forHorizontal,
+    }),
 });
-
-export default SimpleApp;
+class RouterApp extends Component {
+    constructor(props) {
+        super(props)
+        this.onBackAndroid=this._onBackAndroid.bind(this)
+    }
+    componentDidMount()
+    {
+        BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+        Orientation.lockToPortrait();//锁定坚屏
+        SplashScreen.hide();
+    }
+    componentWillUnmount(){
+        BackHandler.removeEventListener('hardwareBackPress',this.onBackAndroid);
+    }
+    _onBackAndroid (){
+        if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+            return false;
+        }
+        const { dispatch, nav } = this.props;
+        if (nav.index != 0) {
+            dispatch(NavigationActions.back());
+            return true;
+        }
+        this.lastBackPressed = Date.now();
+        ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+        return true;
+    };
+    render() {
+        return (
+            <Routers navigation={addNavigationHelpers({
+                dispatch: this.props.dispatch,
+                state: this.props.nav,
+            })} />
+        );
+    }
+}
+const mapStateToProps = (state) => ({
+    nav: state.navReducer
+});
+export const App = connect(mapStateToProps)(RouterApp);
