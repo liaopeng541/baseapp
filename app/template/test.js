@@ -1,33 +1,28 @@
 /**
  * Created by liaopeng on 2018/1/25.
  */
-import React from 'react';
+import React,{Component} from 'react';
 import {Text,View,ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from "react-redux";
+import CryptoJS from "crypto-js"
 import Page from "../components/Page"
+import Base from "../components/BaseComponent"
 import common from "../common/common"
-class Home extends React.Component{
+class Home extends Component{
     constructor(props) {
         super(props);
         this.F=new common(this)
-        this.state={
-            isloading: false,
-            isRefreshing: false,
-            v:"我的小小数据"
-        }
     }
     componentDidMount()
     {
+
     }
     render() {
         return (
-            <Page showLoading={this.state.isloading} style={{paddingTop:200}}>
-                <Text onPress={this.F.to.bind(this,"My",{aa:"aaaa"})}>{this.state.v}</Text>
-                <Text
-                    onPress={this.F.showLoading.bind(this,this)}
-                >还原222</Text>
-            </Page>
+            <View style={{height:50,backgroundColor:"#cc0033",marginTop:100}}>
+                <Text onPress={()=>{this.F.to("My")}}>{this.F.getDeviceToken()}111</Text>
+            </View>
         );
     }
 }
