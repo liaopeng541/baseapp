@@ -25,7 +25,7 @@ class Last extends Base {
             <View style={{backgroundColor:"#cccccc",flex:1,alignItems:"center",justifyContent:"center"}}>
                 <Text onPress={
                     ()=>{
-                        this.BackTop();
+                        this.backTop();
                       //  this.props.navigation.goBack("List");
 
                 }}> Last0 ! </Text>

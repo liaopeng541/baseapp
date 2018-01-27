@@ -5,8 +5,10 @@ import React, {Component} from 'react';
 import {Text,View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import {connect} from "react-redux";
-var CryptoJS = require("crypto-js");
-class Home extends Component {
+import CryptoJS from "crypto-js"
+import Page from "../components/Page"
+import Base from "../components/BaseComponent"
+class Home extends Base {
     constructor(props) {
         super(props);
         this.state={
@@ -35,19 +37,21 @@ class Home extends Component {
             aaa:encrypted,
             bbb:decrypted
         })
+        this.showLoading();
+        setTimeout(this.hideLoading.bind(this),3000);
     }
     render() {
         return (
-            <View style={{flex:1}}>
+            <Page showLoading={this.state.isloading}>
                 <Icon name={"ios-people"} style={{backgroundColor: "rgba(0,0,0,0)"}}
                        size={20} color="#cc0033"/>
             <Text onPress={()=>{
-                this.props.navigation.navigate('List', {goods_id: 'i am the param'});
+                this.bottomTo('List', {aaa: 'bbb'});
             }}> {this.state.aaa} </Text>
                 <Text onPress={()=>{
                     // this.props.navigation.navigate('List', {goods_id: 'i am the param'});
                 }}> {this.state.bbb} </Text>
-            </View>
+            </Page>
         );
     }
 }

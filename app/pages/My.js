@@ -6,16 +6,6 @@ import {Text,View} from 'react-native';
 import {connect} from "react-redux";
 import { NavigationActions } from 'react-navigation'
 import Base from "../components/BaseComponent"
-const resetAction = NavigationActions.reset({
-    index: 0,
-    actions: [
-        NavigationActions.navigate({ routeName: 'Home'})
-    ]
-})
-
-
-
-
 class My extends Base {
     constructor(props) {
         super(props);
@@ -25,12 +15,12 @@ class My extends Base {
             <View style={{backgroundColor:"#cccccc",flex:1,alignItems:"center",justifyContent:"center"}}>
                 <Text onPress={
                     ()=>{
-                        this.To("Last")
+                        this.to("Last")
 
                     }}> my 222! </Text>
                 <Text onPress={
                     ()=>{
-                        this.Back(2);
+                        this.back(2);
 
                     }}> my 222! </Text>
 

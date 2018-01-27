@@ -3,49 +3,39 @@
  */
 import {Component} from 'react'
 import Toast from 'react-native-root-toast';
-import { NavigationActions } from 'react-navigation'
 export default class BaseComponent extends Component {
     constructor(props) {
         super(props);
+        this.params=this.props.navigation.state.params
         this.state = {
             isloading: false,
         }
     }
-    To(omponent,args={})
+    to(component,args={})
     {
-        this.props.navigation.navigate(omponent,args)
-
+        this.props.navigation.navigate(component,args)
     }
-    Back(num=1) {
+    back(num=1) {
         this.props.navigation.goBack(this.props.nav.routes[this.props.nav.routes.length-num].key)
     }
-    BackTop()
+    backTop()
     {
         this.props.navigation.goBack(this.props.nav.routes[1].key)
     }
-    bottomTo(component,args=null)
+    bottomTo(component,args={})
     {
+        this.props.navigation.navigate(component,Object.assign({transition: 'forVertical'},args))
 
     }
-
     async getTokens()
     {
 
     }
-
-
-
-    /**
-     * 加载中
-     */
-    showLoading() {
+    showLoading(){
         this.setState({
             isloading: true,
         })
     }
-    /**
-     * 加载完成
-     */
     hideLoading() {
         this.setState({
             isloading: false,
@@ -59,7 +49,6 @@ export default class BaseComponent extends Component {
             case 'top':toastPosition = Toast.positions.TOP;break;
             case 'bottom':toastPosition = Toast.positions.BOTTOM;break;
         }
-
         this.toast&&Toast.hide(this.toast);
         this.toast = Toast.show(message, {
             duration: time,

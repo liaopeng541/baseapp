@@ -3,6 +3,7 @@ package com.rnbase;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.react.rnspinkit.RNSpinkitPackage;
 import com.reactlibrary.RNSyanImagePickerPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.cboy.rn.splashscreen.SplashScreenReactPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSpinkitPackage(),
             new RNSyanImagePickerPackage(),
             new OrientationPackage(),
             new SplashScreenReactPackage(),

@@ -13,6 +13,15 @@ import SplashScreen from 'react-native-splash-screen'
 import Orientation from 'react-native-orientation';
 import My from "../pages/My";
 import Last from "../pages/Last";
+const TransitionConfiguration = () => ({
+    screenInterpolator: (sceneProps) => {
+        const { scene } = sceneProps;
+        const { route } = scene;
+        const params = route.params || {};
+        const transition = params.transition || 'forHorizontal';
+        return CardStackStyleInterpolator[transition](sceneProps);
+    },
+});
 export const Routers = StackNavigator({
     Home: {screen: HomeTab},
     List:{screen:List},
@@ -21,9 +30,7 @@ export const Routers = StackNavigator({
 },{
     navigationOptions:{header:null},
     initialRouteName: 'Home',
-    transitionConfig: () => ({
-        screenInterpolator: CardStackStyleInterpolator.forHorizontal,
-    }),
+    transitionConfig:TransitionConfiguration,
 });
 class RouterApp extends Component {
     constructor(props) {
