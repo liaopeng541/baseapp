@@ -19,6 +19,7 @@
 		"react-native-root-toast": "github:pilipa-cn/react-native-root-toast#v2.2.0",
 		"react-native-spinkit": "^1.1.1",
 		"react-native-splash-screen": "^2.0.0",
+		"react-native-swRefresh": "^1.2.3",
 		"react-native-syan-image-picker": "0.0.8",
 		"react-native-tab-navigator": "^0.3.4",
 		"react-native-vector-icons": "^4.5.0",
